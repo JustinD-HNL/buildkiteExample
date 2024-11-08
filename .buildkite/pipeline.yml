@@ -19,7 +19,12 @@ steps:
     artifact_paths:
       - "hello/hello"
       # Specifies that the compiled binary should be uploaded as an artifact.
-
+  - label: ":eyes: Manual Approval"
+    # This step requires manual approval to proceed to the final step.
+    type: block
+    # Indicates that this is a 'block' step for manual intervention.
+    prompt: "Approve to continue to the final step"
+    # The message displayed to the approver.
   # The following step is commented out due to errors with Docker and Snyk integration.
   # It was intended to test the Go project for vulnerabilities using Snyk.
   # - label: ":snyk: Test Go"
@@ -65,9 +70,4 @@ steps:
       - ./hello/hello $(buildkite-agent meta-data get "user_name")
         # Executes the binary, passing the user's name retrieved from metadata as an argument.
 
-  - label: ":eyes: Manual Approval"
-    # This step requires manual approval to proceed to the final step.
-    type: block
-    # Indicates that this is a 'block' step for manual intervention.
-    prompt: "Approve to continue to the final step"
-    # The message displayed to the approver.
+
