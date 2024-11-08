@@ -7,7 +7,7 @@ steps:
           volumes:
             - ".:/app"
     command:
-      - go build -o hello/hello
+      - go build -o hello/hello ./hello
     artifact_paths:
       - "hello/hello"
   - label: ":pause_button: Enter Name"
