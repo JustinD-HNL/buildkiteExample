@@ -3,7 +3,7 @@ steps:
     # This step builds the Go project inside a Docker container.
     plugins:
     - test-collector#v1.0.0:
-        files: "/app/junit-*.xml"
+        files: "./junit.xml"
         format: "junit"     
     - docker#v3.9.0:
           # Uses the Buildkite Docker plugin version 3.9.0.
