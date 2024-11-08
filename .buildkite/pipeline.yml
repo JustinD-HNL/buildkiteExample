@@ -10,7 +10,6 @@ steps:
       - go build -o hello/hello ./hello
     artifact_paths:
       - "hello/hello"
-  - label: ":pause_button: Enter Name"
   - label: ":snyk: Test Go"
     command:
       - go mod download
@@ -23,6 +22,7 @@ steps:
             - ".:/project"
           environment:
             - SNYK_TOKEN
+  - label: ":pause_button: Enter Name"
     type: block
     prompt: "Please enter your name"
     fields:
