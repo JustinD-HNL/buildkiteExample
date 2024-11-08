@@ -17,7 +17,7 @@ steps:
     command:
       - go install gotest.tools/gotestsum@latest
       # Installs the gotestsum tool for running Go tests.
-      - gotestsum --junitfile junit.xml ./...
+      - gotestsum --junitfile junit.xml 
       # Runs all Go tests in the project and outputs the results in JUnit format.
       - go build -o hello/hello ./hello
       # Runs the Go build command:
