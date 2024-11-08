@@ -1,0 +1,27 @@
+steps:
+  - label: ":docker: Build Project"
+    plugins:
+      - docker#v3.9.0:
+          image: "golang:1.18.0"
+          workdir: "/app"
+          volumes:
+            - ".:/app"
+    command:
+      - go build -o hello/hello
+    artifact_paths:
+      - "hello/hello"
+  - label: ":pause_button: Enter Name"
+    type: block
+    prompt: "Please enter your name"
+    fields:
+      - text: "Your name"
+        key: "user_name"
+        hint: "Enter your name here"
+  - label: ":running: Run Program with Name"
+    command:
+      - buildkite-agent artifact download "hello/hello" .
+      - chmod +x hello/hello
+      - ./hello/hello $(buildkite-agent meta-data get "user_name")
+  - label: ":eyes: Manual Approval"
+    type: manual
+    prompt: "Approve to continue to the final step"
