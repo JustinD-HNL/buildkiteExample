@@ -20,7 +20,7 @@ steps:
       - "hello/hello"
       # Specifies that the compiled binary should be uploaded as an artifact.
   - label: ":eyes: Manual Approval"
-    # This step requires manual approval to proceed to the final step.
+    # This step requires "manual approval" ACTION: make more robust by adding seucirty limiting what users/groups can approve.   
     type: block
     # Indicates that this is a 'block' step for manual intervention.
     prompt: "Approve to continue to the final step"
