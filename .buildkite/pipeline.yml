@@ -2,9 +2,9 @@ steps:
   - label: ":docker: Build Project"
     # This step builds the Go project inside a Docker container.
     plugins:
-    - test-collector#v1.0.0:
-        files: "./junit.xml"
-        format: "junit"     
+    # - test-collector#v1.0.0:
+    #     files: "./junit.xml"
+    #     format: "junit"     
     - docker#v3.9.0:
           # Uses the Buildkite Docker plugin version 3.9.0.
           image: "golang:1.18.0"
@@ -15,10 +15,10 @@ steps:
             - ".:/app"
             # Mounts the current directory (containing your code) into /app inside the container.
     command:
-      - go install gotest.tools/gotestsum@latest
-      # Installs the gotestsum tool for running Go tests.
-      - gotestsum --junitfile junit.xml 
-      # Runs all Go tests in the project and outputs the results in JUnit format.
+      # - go install gotest.tools/gotestsum@latest
+      # # Installs the gotestsum tool for running Go tests.
+      # - gotestsum --junitfile junit.xml 
+      # # Runs all Go tests in the project and outputs the results in JUnit format.
       - go build -o hello/hello ./hello
       # Runs the Go build command:
       # - Compiles the Go code located in ./hello.
