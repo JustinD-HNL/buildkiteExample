@@ -41,7 +41,7 @@ steps:
   #           - SNYK_TOKEN
   #           # Passes the SNYK_TOKEN environment variable into the container for authentication.
 
-  - label: ":pause_button: Enter Name"
+  - label: ":green_button: Enter Name"
     # This step pauses the pipeline and prompts the user to enter their name.
     type: block
     # Specifies that this is a 'block' step, which waits for user input.
