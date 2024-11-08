@@ -11,9 +11,9 @@ steps:
     artifact_paths:
       - "hello/hello"
   - label: ":pause_button: Enter Name"
-   steps:
+steps:
   - label: ":snyk: Test Go"
-       command:
+    command:
       - go mod download
       - snyk test
     plugins:
