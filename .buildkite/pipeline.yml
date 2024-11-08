@@ -23,5 +23,5 @@ steps:
       - chmod +x hello/hello
       - ./hello/hello $(buildkite-agent meta-data get "user_name")
   - label: ":eyes: Manual Approval"
-    type: manual
+    type: block
     prompt: "Approve to continue to the final step"
