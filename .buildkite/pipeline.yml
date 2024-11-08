@@ -11,6 +11,19 @@ steps:
     artifact_paths:
       - "hello/hello"
   - label: ":pause_button: Enter Name"
+   steps:
+  - label: ":snyk: Test Go"
+       command:
+      - go mod download
+      - snyk test
+    plugins:
+      - docker#v5.9.0:
+          image: "snyk/snyk:golang"
+          workdir: "/project"
+          volumes:
+            - ".:/project"
+          environment:
+            - SNYK_TOKEN
     type: block
     prompt: "Please enter your name"
     fields:
