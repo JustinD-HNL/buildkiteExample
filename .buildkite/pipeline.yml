@@ -1,40 +1,73 @@
 steps:
   - label: ":docker: Build Project"
+    # This step builds the Go project inside a Docker container.
     plugins:
       - docker#v3.9.0:
+          # Uses the Buildkite Docker plugin version 3.9.0.
           image: "golang:1.18.0"
+          # Specifies the Docker image to use—the official Golang image version 1.18.0.
           workdir: "/app"
+          # Sets the working directory inside the container to /app.
           volumes:
             - ".:/app"
+            # Mounts the current directory (containing your code) into /app inside the container.
     command:
       - go build -o hello/hello ./hello
+      # Runs the Go build command:
+      # - Compiles the Go code located in ./hello.
+      # - Outputs the binary to hello/hello.
     artifact_paths:
       - "hello/hello"
-  # resolve errors with docker and snyk
+      # Specifies that the compiled binary should be uploaded as an artifact.
+
+  # The following step is commented out due to errors with Docker and Snyk integration.
+  # It was intended to test the Go project for vulnerabilities using Snyk.
   # - label: ":snyk: Test Go"
   #   command:
   #     - go mod download
+  #       # Downloads all dependencies specified in go.mod.
   #     - snyk test
+  #       # Runs Snyk security tests on the project.
   #   plugins:
   #     - docker#v5.9.0:
   #         image: "snyk/snyk:golang"
+  #         # Uses the Snyk Docker image that includes Go support.
   #         workdir: "/project"
+  #         # Sets the working directory inside the container to /project.
   #         volumes:
   #           - ".:/project"
+  #           # Mounts the current directory into /project inside the container.
   #         environment:
   #           - SNYK_TOKEN
+  #           # Passes the SNYK_TOKEN environment variable into the container for authentication.
+
   - label: ":pause_button: Enter Name"
+    # This step pauses the pipeline and prompts the user to enter their name.
     type: block
+    # Specifies that this is a 'block' step, which waits for user input.
     prompt: "Please enter your name"
+    # The message displayed to the user when the pipeline pauses.
     fields:
       - text: "Your name"
+        # The label for the input field where the user will enter their name.
         key: "user_name"
+        # The metadata key under which the entered name will be stored.
         hint: "Enter your name here"
+        # A hint displayed in the input field to guide the user.
+
   - label: ":running: Run Program with Name"
+    # This step runs the compiled program, passing in the user's name.
     command:
       - buildkite-agent artifact download "hello/hello" .
+        # Downloads the 'hello/hello' artifact to the current directory.
       - chmod +x hello/hello
+        # Makes the downloaded binary executable.
       - ./hello/hello $(buildkite-agent meta-data get "user_name")
+        # Executes the binary, passing the user's name retrieved from metadata as an argument.
+
   - label: ":eyes: Manual Approval"
+    # This step requires manual approval to proceed to the final step.
     type: block
+    # Indicates that this is a 'block' step for manual intervention.
     prompt: "Approve to continue to the final step"
+    # The message displayed to the approver.
